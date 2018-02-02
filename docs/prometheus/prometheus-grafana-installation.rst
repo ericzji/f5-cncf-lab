@@ -33,6 +33,71 @@ we can visit http://127.0.0.1:9090 and we should see the Prometheus user interfa
 
 Installing Grafana
 -------------
+We are going to add Grafana to our cluster using Helm and Tiller. Helm and Helm charts are allow for predefined Kubernetes apps. You can find more on https://kubeapps.com/. 
+
+install brew
+::
+    sudo apt install linuxbrew-wrapper
+
+install Helm
+Helm now has an installer script that will automatically grab the latest version
+of the Helm client and [install it locally](https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get).
+
+You can fetch that script, and then execute it locally. It's well documented so
+that you can read through it and understand what it is doing before you run it.
+
+::
+$ curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+
+Initialize helm using 
+::
+    helm init. 
+Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.
+
+When helm is initialized we can use 
+::
+    helm install --name my-grafana stable/grafana
+
+I encountered the following error:
+::
+scs@k8s-master:~/prometheus$ helm install --name my-grafana --set rbac.create=true stable/grafana
+Error: release my-grafana failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "default"
+
+The way to fix it:
+1. eset the tiller
+::
+    helm reset --force
+2. create these rbac config for tiller 
+::
+    kubectl create -f rbac-config.yaml
+3. run helm init again
+::
+    helm init --service-account tiller
+
+This will deploy Grafana to the Kubernetes cluster using Helm and Tiller. Again we can check the deployment of Grafana using 
+::
+    kubectl get deployment. 
+
+If everything works as it should then you will get some instructions on how to get the admin password for Grafana. 
+::
+    NOTES:
+1. Get your 'admin' user password by running:
+
+   kubectl get secret --namespace default my-grafana-grafana -o jsonpath="{.data.grafana-admin-password}" | base64 --decode ; echo
+
+2. The Grafana server can be accessed via port 80 on the following DNS name from within your cluster:
+
+   my-grafana-grafana.default.svc.cluster.local
+
+   Get the Grafana URL to visit by running these commands in the same shell:
+
+     export POD_NAME=$(kubectl get pods --namespace default -l "app=my-grafana-grafana,component=grafana" -o jsonpath="{.items[0].metadata.name}")
+     kubectl --namespace default port-forward $POD_NAME 3000
+
+3. Login with the password from step 1 and the username: admin
+
 
 Setting up Grafana
 -------------
