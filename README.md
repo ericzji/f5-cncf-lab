@@ -35,8 +35,9 @@ Simply run:
 export KUBECONFIG=<path> # defaults to "~/.kube/config"
 cd contrib/kube-prometheus/
 hack/cluster-monitoring/deploy
-After all pods are ready, you can reach:
 ```
+After all pods are ready, you can reach:
+
 Prometheus UI on node port 30900
 - Alertmanager UI on node port 30903
 - Grafana on node port 30902
