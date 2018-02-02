@@ -81,6 +81,7 @@ This will deploy Grafana to the Kubernetes cluster using Helm and Tiller. Again 
     kubectl get deployment. 
 
 If everything works as it should then you will get some instructions on how to get the admin password for Grafana. 
+
 .. image:: ../images/grafana-get-admin.png
 	:align: center
 
