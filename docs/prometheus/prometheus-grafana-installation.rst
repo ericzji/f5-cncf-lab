@@ -81,23 +81,8 @@ This will deploy Grafana to the Kubernetes cluster using Helm and Tiller. Again 
     kubectl get deployment. 
 
 If everything works as it should then you will get some instructions on how to get the admin password for Grafana. 
-::
-    NOTES:
-1. Get your 'admin' user password by running:
-
-   kubectl get secret --namespace default my-grafana-grafana -o jsonpath="{.data.grafana-admin-password}" | base64 --decode ; echo
-
-2. The Grafana server can be accessed via port 80 on the following DNS name from within your cluster:
-
-   my-grafana-grafana.default.svc.cluster.local
-
-   Get the Grafana URL to visit by running these commands in the same shell:
-
-     export POD_NAME=$(kubectl get pods --namespace default -l "app=my-grafana-grafana,component=grafana" -o jsonpath="{.items[0].metadata.name}")
-     kubectl --namespace default port-forward $POD_NAME 3000
-
-3. Login with the password from step 1 and the username: admin
-
+.. image:: ../images/grafana-get-admin.png
+	:align: center
 
 Setting up Grafana
 -------------
