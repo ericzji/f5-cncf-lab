@@ -26,25 +26,25 @@ docs/prometheus/prometheus-grafana-installation.rst
 For my case, I use kubeadm to build my own Kubernetes Cluster (1 Master and 2 nodes). I encountered some issue with above steps.
 Instead, I leveraged kube-prometheus to use a single command for installation.
 
-::
+```
     git clone https://github.com/coreos/prometheus-operator.git
-
+```
 Simply run:
 
-::
+```
 export KUBECONFIG=<path> # defaults to "~/.kube/config"
 cd contrib/kube-prometheus/
 hack/cluster-monitoring/deploy
 After all pods are ready, you can reach:
-
+```
 Prometheus UI on node port 30900
 - Alertmanager UI on node port 30903
 - Grafana on node port 30902
 - To tear it all down again, run:
 
-::
+```
 hack/cluster-monitoring/teardown
-
+```
 Lab 4: gRPC
 ====================================================
 Lab 5: OpenTracing and Jaeger
