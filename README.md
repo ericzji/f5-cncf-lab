@@ -8,7 +8,7 @@ Lab 1: Install a Kubernetes Cluster (1 Master and 2 nodes)
 ===================================================
 Lab 2: How to install and use F5 Container connector
 ====================================================
-This introductory class covers the following topics:
+This lab covers the following topics:
 
 - Install the F5 Kubernetes BIG-IP Controller
     - BIG-IP setup
