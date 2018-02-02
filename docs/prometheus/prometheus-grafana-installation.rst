@@ -21,6 +21,9 @@ We can now check the deployment status using
 ::
     kubectl get deployment
 
+.. image:: ../images/prometheus-get-deployment.png
+	:align: center
+
 When the deployment is complete and the Prometheus pod is running we can visit the Prometheus UI using port-forwarding. First get the pod name using kubectl get pods. Then using:
 ::
     kubectl port-forward prometheus_pod_name 9090:9090
