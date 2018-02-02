@@ -85,6 +85,15 @@ If everything works as it should then you will get some instructions on how to g
 .. image:: ../images/grafana-get-admin.png
 	:align: center
 
+Because we do not want to add a specific Prometheus pod on the Kubernetes cluster as datasource in Grafana (even though it does work) we add a Kubernetes service using the following YAML
+::
+    kubectl create -f prometheus-service.yaml
+
+When we now list the services using kubectl get svc. Now we have the name of the svc and the port. In this case the URL is http://prometheus-service:8080. This URL can be used later to add Prometheus as a datasource in Grafana.
+
+.. image:: ../images/prometheus-service.png
+	:align: center
+
 Setting up Grafana
 -------------
 The last part is to setup Grafana. The default install we used for installing Grafana using Helm does not include a public IP adress for Grafana. So we have to use a kubectl port forward to connect to Grafana.
