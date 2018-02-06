@@ -19,23 +19,24 @@ This lab covers the following topics:
     - Define a Service
 
 Lab 3.0: Setting up Heapster with influxdb and Grafana
+======================================================
 
 Git Clone https://github.com/kubernetes/heapster
 
 Modify grafana.yaml
--    kubernetes.io/cluster-service: 'true'
-+    # kubernetes.io/cluster-service: 'true'
+```
+    # kubernetes.io/cluster-service: 'true'
 
--  # type: NodePort
-+  type: NodePort
+```
+    type: NodePort
 
 Modify heapster.yaml
--    kubernetes.io/cluster-service: 'true'
-+    #kubernetes.io/cluster-service: 'true'
+```
+    #kubernetes.io/cluster-service: 'true'
 
 Modify influxdb.yaml
--    kubernetes.io/cluster-service: 'true'
-+    #kubernetes.io/cluster-service: 'true'
+```
+    #kubernetes.io/cluster-service: 'true'
 
 zji@~> kubectl create -f heapster/deploy/kube-config/influxdb/
 deployment "monitoring-grafana" created
