@@ -18,6 +18,38 @@ This lab covers the following topics:
     - Define a ConfigMap
     - Define a Service
 
+Lab 3.0: Setting up Heapster with influxdb and Grafana
+
+Git Clone https://github.com/kubernetes/heapster
+
+Modify grafana.yaml
+-    kubernetes.io/cluster-service: 'true'
++    # kubernetes.io/cluster-service: 'true'
+
+-  # type: NodePort
++  type: NodePort
+
+Modify heapster.yaml
+-    kubernetes.io/cluster-service: 'true'
++    #kubernetes.io/cluster-service: 'true'
+
+Modify influxdb.yaml
+-    kubernetes.io/cluster-service: 'true'
++    #kubernetes.io/cluster-service: 'true'
+
+zji@~> kubectl create -f heapster/deploy/kube-config/influxdb/
+deployment "monitoring-grafana" created
+service "monitoring-grafana" created
+serviceaccount "heapster" created
+deployment "heapster" created
+service "heapster" created
+deployment "monitoring-influxdb" created
+service "monitoring-influxdb” created
+
+zji@~> kubectl create -f kubernetes-course/deployment/helloworld.yml
+deployment "helloworld-deployment” created
+
+
 Lab 3: Kubernetes cluster monitoring with Prometheus and Grafana
 ====================================================
 If you are using minikube, please follow the following document:
