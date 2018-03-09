@@ -117,7 +117,7 @@ these calls:
 ./genorders.sh
 ```
 
-
+![Image of Jaeger](./docs/images/jaeger.png)
 
 Lab 6: CoreDNS
 ====================================================

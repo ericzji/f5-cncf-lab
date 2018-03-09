@@ -7,7 +7,7 @@ To use this approach, it is necessary to setup some environment variables before
 
 ```
 eval $(minikube docker-env)
-
+cd simple/
 mvn clean install docker:build
 ```
 
