@@ -116,6 +116,7 @@ these calls:
 ```
 ./genorders.sh
 ```
+![Image of call-scripts](./docs/images/call-scripts.png)
 
 ![Image of Jaeger](./docs/images/jaeger.png)
 ![Image of instance1](./docs/images/trace-instance1.png)
