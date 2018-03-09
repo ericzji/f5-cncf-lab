@@ -94,6 +94,19 @@ First step is to install:
 
 The second step is to try out Simple Two Service Example. The example consists of two services, ordermgr and accountmgr. The first service presents two REST endpoints called buy and sell. These REST methods will call a hello REST endpoint on the second service.
 
+Order Manager’s Controller:
+![Image Order Manager’s Controller](./docs/images/order-manager-controller.png)
+
+```
+The service injects the OpenTracing Tracer to enable access to the active span.
+
+All three methods introduce a random delay.
+
+The buy and sell methods additionally set a baggage item transaction with the name of the business transaction being performed (i.e. buy or sell). For those not familiar with OpenTracing, the baggage concept allows information to be carried in band with the trace context between invoked services. We will show you how a baggage item can be used to isolate the metrics relevant only for a particular business transaction.
+
+Invoking a non-existent endpoint on accountmgr will lead to an error being reported in the trace and metric data.
+```
+
 To deploy the example on the appropriate cloud environment:
 
 * [Kubernetes instructions](opentracing-prometheus-example/simple/Kubernetes.md)
