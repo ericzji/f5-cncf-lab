@@ -83,6 +83,14 @@ Lab 4: gRPC
 ====================================================
 Lab 5: OpenTracing and Jaeger
 ====================================================
+This repository contains an example of using OpenTracing and Prometheus to monitor an application in a Kubernetes environment.
+
+First step is to install the OpenTracing compliant tracing system and Prometheus in the cloud environment.
+
+* [Kubernetes instructions](opentracing-prometheus-example/Kubernetes.md)
+
+The second step is to try out the example. Instructions are provided in the sub-folder on how to deploy and use the example.
+
 Lab 6: CoreDNS
 ====================================================
 Lab 7: Fluentd and Distributed Logging
