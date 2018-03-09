@@ -118,6 +118,9 @@ these calls:
 ```
 
 ![Image of Jaeger](./docs/images/jaeger.png)
+![Image of instance1](./docs/images/trace-instance1.png)
+![Image of instance2](./docs/images/trace-instance1.png)
+
 
 Lab 6: CoreDNS
 ====================================================
