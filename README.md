@@ -85,11 +85,39 @@ Lab 5: OpenTracing and Jaeger
 ====================================================
 This repository contains an example of using OpenTracing and Prometheus to monitor an application in a Kubernetes environment.
 
-First step is to install the OpenTracing compliant tracing system and Prometheus in the cloud environment.
+First step is to install: 
+ - OpenTracing compliant tracing system 
+ - Prometheus in the cloud environment
+ - Jaeger OpenTracing tracing system
 
 * [Kubernetes instructions](opentracing-prometheus-example/Kubernetes.md)
 
-The second step is to try out the example. Instructions are provided in the sub-folder on how to deploy and use the example.
+The second step is to try out Simple Two Service Example. The example consists of two services, ordermgr and accountmgr. The first service presents two REST endpoints called buy and sell. These REST methods will call a hello REST endpoint on the second service.
+
+To deploy the example on the appropriate cloud environment:
+
+* [Kubernetes instructions](Kubernetes.md)
+
+Once the services have been successfully deployed and started it is time to try out the services. Using
+the _ordermgr_ endpoint address (provided as part of the instructions for installing the example in
+the cloud environment), perform some test calls to the service:
+
+```
+curl $ORDERMGR/buy
+curl $ORDERMGR/sell
+```
+
+Then go to the OpenTracing dashboard to examine the traces that were generated from the service invocations. These
+should show calls to _ordermgr_ and subsequently from _ordermgr_ to _accountmgr_.
+
+Rather than manually invoke the endpoints above, the following script will loop randomly performing
+these calls:
+
+```
+./genorders.sh
+```
+
+
 
 Lab 6: CoreDNS
 ====================================================
