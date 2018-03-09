@@ -1,0 +1,104 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ordermgr
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        service: ordermgr
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: ordermgr 
+        image: local/kubeotprom-ordermgr:0.0.1
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: prometheus-jmx
+          containerPort: 9099
+        env:
+          - name: JAEGER_SERVICE_NAME
+            value: ordermgr
+          - name: JAEGER_AGENT_HOST
+            value: jaeger-agent
+          - name: JAEGER_SAMPLER_TYPE
+            value: const
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: JAEGER_REPORTER_LOG_SPANS
+            value: "true"
+          - name: JAEGER_TAGS
+            value: "version=${VERSION}"
+          - name: ACCOUNTMGR_URL
+            value: "http://accountmgr:8080"
+          - name: OPENTRACING_METRICS_EXPORTER_HTTP_PATH
+            value: "/metrics"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ordermgr
+  labels:
+    service: ordermgr
+spec:
+  type: LoadBalancer
+  selector:
+    service: ordermgr
+  ports:
+  - name: http
+    port: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: accountmgr
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        service: accountmgr
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: accountmgr 
+        image: local/kubeotprom-accountmgr:0.0.1
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: prometheus-jmx
+          containerPort: 9099
+        env:
+          - name: JAEGER_SERVICE_NAME
+            value: accountmgr
+          - name: JAEGER_AGENT_HOST
+            value: jaeger-agent
+          - name: JAEGER_SAMPLER_TYPE
+            value: const
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: JAEGER_REPORTER_LOG_SPANS
+            value: "true"
+          - name: JAEGER_TAGS
+            value: "version=${VERSION}"
+          - name: OPENTRACING_METRICS_EXPORTER_HTTP_PATH
+            value: "/metrics"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: accountmgr
+  labels:
+    service: accountmgr
+spec:
+  type: LoadBalancer
+  selector:
+    service: accountmgr
+  ports:
+  - name: http
+    port: 8080
+

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.example.kubeotprom</groupId>
+	<artifactId>kubeotprom-ordermgr</artifactId>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
+
+	<name>Order Manager</name>
+	<description>Order Manager</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.3.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<docker.registry>local</docker.registry>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+
+		<jaeger.version>0.24.0</jaeger.version>
+		<prometheus.version>0.0.23</prometheus.version>
+		<prometheus.jmx-exporter.version>0.10</prometheus.jmx-exporter.version>
+		<opentracing-contrib-springweb.version>0.1.0</opentracing-contrib-springweb.version>
+		<opentracing-contrib-opentracing-metrics.version>0.2.0</opentracing-contrib-opentracing-metrics.version>
+
+		<fabric8.version>0.23.0</fabric8.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-spring-web-autoconfigure</artifactId>
+			<version>${opentracing-contrib-springweb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-metrics-prometheus-spring-autoconfigure</artifactId>
+			<version>${opentracing-contrib-opentracing-metrics.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.uber.jaeger</groupId>
+			<artifactId>jaeger-tracerresolver</artifactId>
+			<version>${jaeger.version}</version>
+		</dependency>
+
+		<!-- Hotspot JVM metrics -->
+		<dependency>
+		     <groupId>io.prometheus</groupId>
+		     <artifactId>simpleclient_hotspot</artifactId>
+		     <version>${prometheus.version}</version>
+		</dependency>
+		<!-- Exposition servlet -->
+		<dependency>
+		     <groupId>io.prometheus</groupId>
+		     <artifactId>simpleclient_servlet</artifactId>
+		     <version>${prometheus.version}</version>
+		</dependency>
+		<!-- The client -->
+		<dependency>
+		     <groupId>io.prometheus</groupId>
+		     <artifactId>simpleclient</artifactId>
+		     <version>${prometheus.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.prometheus.jmx</groupId>
+			<artifactId>jmx_prometheus_javaagent</artifactId>
+			<version>${prometheus.jmx-exporter.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>${fabric8.version}</version>
+				<configuration>
+					<images>
+						<image>
+							<name>${docker.registry}/${project.artifactId}</name>
+							<build>
+								<from>docker.io/jboss/base-jdk:8</from>
+								<tags>
+									<tag>test</tag>
+									<tag>${project.version}</tag>
+								</tags>
+								<env>
+									<VERSION>${project.version}</VERSION>
+								</env>
+								<entryPoint>
+									<exec>
+										<arg>java</arg>
+										<arg>-javaagent:/jmx_prometheus_javaagent-${prometheus.jmx-exporter.version}.jar=9099:/jmx-exporter-config.yml</arg>
+										<arg>-jar</arg>
+										<arg>/${project.build.finalName}.jar</arg>
+									</exec>
+								</entryPoint>
+								<assembly>
+									<mode>dir</mode>
+									<targetDir>/</targetDir>
+									<inline>
+										<files>
+											<file>
+												<source>${project.basedir}/src/docker-files/jmx-exporter-config.yml</source>
+											</file>
+										</files>
+										<dependencySets>
+											<dependencySet>
+												<includes>
+													<include>io.prometheus.jmx:jmx_prometheus_javaagent</include>
+													<include>${project.groupId}:${project.artifactId}</include>
+												</includes>
+												<outputDirectory>/</outputDirectory>
+											</dependencySet>
+										</dependencySets>
+									</inline>
+								</assembly>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

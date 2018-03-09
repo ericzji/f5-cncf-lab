@@ -1,0 +1,71 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ordermgr-canary
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: ordermgr
+    spec:
+      containers:
+      - name: ordermgr
+        image: local/kubeotprom-ordermgr:0.0.2
+        ports:
+        - name: web
+          containerPort: 8080
+        - name: prometheus-jmx
+          containerPort: 9099
+        env:
+          - name: JAEGER_SERVICE_NAME
+            value: ordermgr
+          - name: JAEGER_AGENT_HOST
+            value: jaeger-agent
+          - name: JAEGER_SAMPLER_TYPE
+            value: const
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: JAEGER_REPORTER_LOG_SPANS
+            value: "true"
+          - name: JAEGER_TAGS
+            value: "version=${VERSION}"
+          - name: ACCOUNTMGR_URL
+            value: "http://accountmgr:8080"
+          - name: OPENTRACING_METRICS_EXPORTER_HTTP_PATH
+            value: "/metrics"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: accountmgr-canary
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: accountmgr
+    spec:
+      containers:
+      - name: accountmgr
+        image: local/kubeotprom-accountmgr:0.0.2
+        ports:
+        - name: web
+          containerPort: 8080
+        - name: prometheus-jmx
+          containerPort: 9099
+        env:
+          - name: JAEGER_SERVICE_NAME
+            value: accountmgr
+          - name: JAEGER_AGENT_HOST
+            value: jaeger-agent
+          - name: JAEGER_SAMPLER_TYPE
+            value: const
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: JAEGER_REPORTER_LOG_SPANS
+            value: "true"
+          - name: JAEGER_TAGS
+            value: "version=${VERSION}"
+          - name: OPENTRACING_METRICS_EXPORTER_HTTP_PATH
+            value: "/metrics"
