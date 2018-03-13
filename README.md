@@ -140,3 +140,31 @@ Lab 6: CoreDNS
 ====================================================
 Lab 7: Fluentd and Distributed Logging
 ====================================================
+## Logging with Elasticsearch and fluentd
+
+```bash
+kubectl apply \
+  --filename https://raw.githubusercontent.com/giantswarm/kubernetes-elastic-stack/master/manifests-all.yaml
+
+minikube service kibana
+```
+
+For the index pattern in Kibana choose `fluentd-*`, then switch to the "Discover" view.
+Every log line by containers running within the Kubernetes cluster is enhanced by meta data like `namespace_name`, `labels` and so on. This way it is easy to group and filter down on specific parts.
+
+
+## Turn down all logging components
+
+```bash
+kubectl delete \
+  --filename https://raw.githubusercontent.com/giantswarm/kubernetes-elastic-stack/master/manifests-all.yaml
+```
+
+FIXME alternatively
+--selector stack=logging
+
+To delete the whole local Kubernetes cluster use this:
+
+```bash
+minikube delete
+```
