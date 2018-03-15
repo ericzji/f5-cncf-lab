@@ -135,8 +135,19 @@ these calls:
 ```
 ![Image of call-scripts](./docs/images/call-scripts.png)
 
+## Jaeger tracing dashboard
+Once some example requests have been created, you can view the tracing dashboard:
 ![Image of Jaeger](./docs/images/jaeger.png)
+
+## Jaeger tracing instance view
+Then you can select a specific trace instance and see further details:
 ![Image of instance1](./docs/images/trace-instance1.png)
+This shows that the trace instance has four spans:
+- the first representing the receipt of the /buy request on ordermgr, 
+- the second representing the processing of /buy request on ordermgr,
+- the third where ordermgr is invoking accountmgr, 
+- and finally the accountmgr receiving the /hello request. 
+
 ![Image of instance2](./docs/images/trace-instance1.png)
 
 
