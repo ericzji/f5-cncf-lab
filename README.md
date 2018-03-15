@@ -85,12 +85,16 @@ Lab 5: OpenTracing and Jaeger
 ====================================================
 This repository contains an example of using OpenTracing and Prometheus to monitor an application in a Kubernetes environment.
 
+## Install OpenTracing and Prometheus
+
 First step is to install: 
 1. OpenTracing compliant tracing system 
 1. Prometheus in the cloud environment
 1. Jaeger OpenTracing tracing system
 
 * [Kubernetes instructions](opentracing-prometheus-example/Kubernetes.md)
+
+## Simple Two Service Example
 
 The second step is to try out Simple Two Service Example. The example consists of two services, ordermgr and accountmgr. The first service presents two REST endpoints called buy and sell. These REST methods will call a hello REST endpoint on the second service.
 
