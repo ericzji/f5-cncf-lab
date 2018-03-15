@@ -148,7 +148,7 @@ This shows that the trace instance has four spans:
 - the third where ordermgr is invoking accountmgr, 
 - and finally the accountmgr receiving the /hello request. 
 
-![Image of instance2](./docs/images/trace-instance1.png)
+![Image of instance2](./docs/images/trace-instance2.png)
 
 
 Lab 6: CoreDNS
