@@ -148,6 +148,7 @@ This shows that the trace instance has four spans:
 - the third where ordermgr is invoking accountmgr, 
 - and finally the accountmgr receiving the /hello request. 
 
+In the following trace instance, the ordermgr /buy request has reported an error:
 ![Image of instance2](./docs/images/trace-instance2.png)
 
 
