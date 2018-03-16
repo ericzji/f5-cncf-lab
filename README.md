@@ -81,6 +81,112 @@ hack/cluster-monitoring/teardown
 ```
 Lab 4: gRPC
 ====================================================
+This guide gets you started with gRPC in Go with a simple working example.
+For installation details, follow this Quick Starts: https://grpc.io/docs/quickstart/go.html)
+
+## Go version
+gRPC requires Go 1.6 or higher.
+```
+$ go version
+```
+
+## Install gRPC
+Use the following command to install gRPC.
+```
+$ go get -u google.golang.org/grpc
+```
+
+## Install Protocol Buffers v3
+Install the protoc compiler that is used to generate gRPC service code. The simplest way to do this is to download pre-compiled binaries for your platform(protoc-<version>-<platform>.zip) from here: https://github.com/google/protobuf/releases
+
+- Unzip this file.
+- Update the environment variable PATH to include the path to the protoc binary file
+
+## Install the protoc plugin for Go
+```
+$ go get -u github.com/golang/protobuf/protoc-gen-go
+```
+The compiler plugin, protoc-gen-go, will be installed in $GOBIN, defaulting to $GOPATH/bin. It must be in your $PATH for the protocol compiler, protoc, to find it.
+```
+$ export PATH=$PATH:$GOPATH/bin
+```
+## Download the example
+The grpc code that was fetched with go get google.golang.org/grpc also contains the examples. They can be found under the examples dir: $GOPATH/src/google.golang.org/grpc/examples.
+
+## helloworld example
+### Try it
+To compile and run the server and client code, the go run command can be used. In the examples directory:
+```
+$ go run greeter_server/main.go
+```
+From a different terminal:
+```
+$ go run greeter_client/main.go
+```
+If things go smoothly, you will see the Greeting: Hello world in the client side output.
+
+### Update a gRPC service
+Let’s update this so that the Greeter service has two methods.
+Edit helloworld/helloworld.proto and update it with a new SayHelloAgain method, with the same request and response types:
+```
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  // Sends another greeting
+  rpc SayHelloAgain (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+```
+### Generate gRPC code
+```
+$ protoc -I helloworld/ helloworld/helloworld.proto --go_out=plugins=grpc:helloworld
+```
+This regenerates the helloworld.pb.go with our new changes.
+
+### Update and run the application
+Update the server
+Edit greeter_server/main.go and add the following function to it:
+```
+func (s *server) SayHelloAgain(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+        return &pb.HelloReply{Message: "Hello again " + in.Name}, nil
+}
+```
+Update the client
+Edit greeter_client/main.go to add the following code to the main function.
+```
+r, err = c.SayHelloAgain(context.Background(), &pb.HelloRequest{Name: name})
+if err != nil {
+        log.Fatalf("could not greet: %v", err)
+}
+log.Printf("Greeting: %s", r.Message)
+```
+
+### Run!
+Run the server
+```
+$ go run greeter_server/main.go
+```
+On a different terminal, run the client
+```
+$ go run greeter_client/main.go
+```
+You should see the updated output:
+```
+$ go run greeter_client/main.go
+Greeting: Hello world
+Greeting: Hello again world
+```
+
 Lab 5: OpenTracing and Jaeger
 ====================================================
 This repository contains an example of using OpenTracing and Prometheus to monitor an application in a Kubernetes environment.
