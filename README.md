@@ -16,6 +16,8 @@ The lab guide is hosted here: http://f5-101-lab-kubernetes.readthedocs.io
 
 Lab 2: How to install and use F5 Container connector
 ====================================================
+The lab guide is hosted here: http://f5-101-lab-kubernetes.readthedocs.io/
+
 This lab covers the following topics:
 
 - Install the F5 Kubernetes BIG-IP Controller
@@ -34,18 +36,18 @@ Git Clone https://github.com/kubernetes/heapster
 Modify grafana.yaml
 ```
     # kubernetes.io/cluster-service: 'true'
-
-```
     type: NodePort
+```
 
 Modify heapster.yaml
 ```
     #kubernetes.io/cluster-service: 'true'
-
+```
 Modify influxdb.yaml
 ```
     #kubernetes.io/cluster-service: 'true'
-
+```
+```
 zji@~> kubectl create -f heapster/deploy/kube-config/influxdb/
 deployment "monitoring-grafana" created
 service "monitoring-grafana" created
@@ -54,10 +56,11 @@ deployment "heapster" created
 service "heapster" created
 deployment "monitoring-influxdb" created
 service "monitoring-influxdb” created
-
+```
+```
 zji@~> kubectl create -f kubernetes-course/deployment/helloworld.yml
 deployment "helloworld-deployment” created
-
+```
 
 Lab 3: Kubernetes cluster monitoring with Prometheus and Grafana
 ====================================================
