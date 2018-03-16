@@ -82,27 +82,28 @@ hack/cluster-monitoring/teardown
 Lab 4: gRPC
 ====================================================
 This guide gets you started with gRPC in Go with a simple working example.
-For installation details, follow this Quick Starts: https://grpc.io/docs/quickstart/go.html)
+For installation details, follow this ![Quick Starts] (https://grpc.io/docs/quickstart/go.html)
 
-## Go version
+## Prerequisites 
+### Go version
 gRPC requires Go 1.6 or higher.
 ```
 $ go version
 ```
 
-## Install gRPC
+### Install gRPC
 Use the following command to install gRPC.
 ```
 $ go get -u google.golang.org/grpc
 ```
 
-## Install Protocol Buffers v3
+### Install Protocol Buffers v3
 Install the protoc compiler that is used to generate gRPC service code. The simplest way to do this is to download pre-compiled binaries for your platform(protoc-<version>-<platform>.zip) from here: https://github.com/google/protobuf/releases
 
 - Unzip this file.
 - Update the environment variable PATH to include the path to the protoc binary file
 
-## Install the protoc plugin for Go
+### Install the protoc plugin for Go
 ```
 $ go get -u github.com/golang/protobuf/protoc-gen-go
 ```
@@ -110,10 +111,10 @@ The compiler plugin, protoc-gen-go, will be installed in $GOBIN, defaulting to $
 ```
 $ export PATH=$PATH:$GOPATH/bin
 ```
-## Download the example
+## Example-1: helloworld 
+### Download the example
 The grpc code that was fetched with go get google.golang.org/grpc also contains the examples. They can be found under the examples dir: $GOPATH/src/google.golang.org/grpc/examples.
 
-## Example-1 helloworld 
 ### Try it
 To compile and run the server and client code, the go run command can be used. In the examples directory:
 ```
@@ -217,28 +218,28 @@ From the route_guide example directory run :
 Running this command generates the following file in the routeguide directory under the route_guide example directory:
 - route_guide.pb.go
 
-## Creating the server
+### Creating the server
 here are two parts to making our RouteGuide service do its job:
 - Implementing the service interface generated from our service definition: doing the actual “work” of our service.
 - Running a gRPC server to listen for requests from clients and dispatch them to the right service implementation.
-### Implementing RouteGuide
+#### Implementing RouteGuide
 - Simple RPC
 - Server-side streaming RPC
 - Client-side streaming RPC
 - Bidirectional streaming RPC
-### Starting the server
+#### Starting the server
 
-## Creating the client
-### Creating a stub
+### Creating the client
+#### Creating a stub
 To call service methods, we first need to create a gRPC channel to communicate with the server. 
 
-### Calling service methods
+#### Calling service methods
 - Simple RPC
 - Server-side streaming RPC
 - Client-side streaming RPC
 - Bidirectional streaming RPC
 
-## Try it out!
+### Try it out!
 To compile and run the server, assuming you are in the folder $GOPATH/src/google.golang.org/grpc/examples/route_guide, simply:
 ```
 $ go run server/server.go
