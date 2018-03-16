@@ -6,7 +6,7 @@ This introductory lab covers the following topics:
 
 Lab 1: Install a Kubernetes Cluster (1 Master and 2 nodes)
 ===================================================
-The purpose of this lab is help you install a Kubernetes Cluster (1 Master and 2 nodes):
+The purpose of this lab is help you install a Kubernetes Cluster (1 Master and 2 nodes)
 * ![Cluster installation](./docs/cluster-setup-guide/cluster-setup-guide-cluster-installation.rst)
 * ![Setup master] (./docs/cluster-setup-guide/cluster-setup-guide-master-setup.rst)
 * ![Node setup](./docs/cluster-setup-guide/cluster-setup-guide-node-setup.rst)
