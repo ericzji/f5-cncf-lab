@@ -113,7 +113,7 @@ $ export PATH=$PATH:$GOPATH/bin
 ## Download the example
 The grpc code that was fetched with go get google.golang.org/grpc also contains the examples. They can be found under the examples dir: $GOPATH/src/google.golang.org/grpc/examples.
 
-## helloworld example
+## Example-1 helloworld 
 ### Try it
 To compile and run the server and client code, the go run command can be used. In the examples directory:
 ```
@@ -186,6 +186,68 @@ $ go run greeter_client/main.go
 Greeting: Hello world
 Greeting: Hello again world
 ```
+
+## Example-2: route mapping application
+Another simple route mapping application that lets clients get information about features on their route, create a summary of their route, and exchange route info
+
+The example code for our tutorial is in grpc/grpc-go/examples/route_guide. To download the example, clone the grpc-go repository by running the following command:
+```
+$ go get google.golang.org/grpc
+```
+Then change your current directory to grpc-go/examples/route_guide:
+```
+$ cd $GOPATH/src/google.golang.org/grpc/examples/route_guide
+```
+You also should have the relevant tools installed to generate the server and client interface code 
+
+### Defining the service
+Our first step (as you’ll know from the Overview) is to define the gRPC service and the method request and response types using protocol buffers
+
+Four kinds of service method, all of which are used in the RouteGuide service:
+- A simple RPC where the client sends a request to the server using the stub and waits for a response to come back, just like a normal function call.
+- A server-side streaming RPC where the client sends a request to the server and gets a stream to read a sequence of messages back. The client reads from the returned stream until there are no more messages. 
+- A client-side streaming RPC where the client writes a sequence of messages and sends them to the server, again using a provided stream. Once the client has finished writing the messages, it waits for the server to read them all and return its response.
+- A bidirectional streaming RPC where both sides send a sequence of messages using a read-write stream. The two streams operate independently, so clients and servers can read and write in whatever order they like: for example, the server could wait to receive all the client messages before writing its responses, or it could alternately read a message then write a message, or some other combination of reads and writes. The order of messages in each stream is preserved.
+
+### Generating client and server code
+From the route_guide example directory run :
+```
+ protoc -I routeguide/ routeguide/route_guide.proto --go_out=plugins=grpc:routeguide
+ ```
+Running this command generates the following file in the routeguide directory under the route_guide example directory:
+- route_guide.pb.go
+
+## Creating the server
+here are two parts to making our RouteGuide service do its job:
+- Implementing the service interface generated from our service definition: doing the actual “work” of our service.
+- Running a gRPC server to listen for requests from clients and dispatch them to the right service implementation.
+### Implementing RouteGuide
+- Simple RPC
+- Server-side streaming RPC
+- Client-side streaming RPC
+- Bidirectional streaming RPC
+### Starting the server
+
+## Creating the client
+### Creating a stub
+To call service methods, we first need to create a gRPC channel to communicate with the server. 
+
+### Calling service methods
+- Simple RPC
+- Server-side streaming RPC
+- Client-side streaming RPC
+- Bidirectional streaming RPC
+
+## Try it out!
+To compile and run the server, assuming you are in the folder $GOPATH/src/google.golang.org/grpc/examples/route_guide, simply:
+```
+$ go run server/server.go
+```
+Likewise, to run the client:
+```
+$ go run client/client.go
+```
+
 
 Lab 5: OpenTracing and Jaeger
 ====================================================
