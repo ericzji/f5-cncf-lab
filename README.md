@@ -349,7 +349,10 @@ minikube service kibana
 
 For the index pattern in Kibana choose `fluentd-*`, then switch to the "Discover" view.
 Every log line by containers running within the Kubernetes cluster is enhanced by meta data like `namespace_name`, `labels` and so on. This way it is easy to group and filter down on specific parts.
+![kibana index pattern](./docs/images/kibana-index-pattern.png)
 
+Kibana Dashboard:
+![kibana discover](./docs/images/kibana-discover.png)
 
 ## Turn down all logging components
 
