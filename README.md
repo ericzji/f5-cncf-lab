@@ -64,11 +64,13 @@ deployment "helloworld-deployment” created
 
 Lab 3: Kubernetes cluster monitoring with Prometheus and Grafana
 ====================================================
-If you are using minikube, please follow the following document:
-docs/prometheus/prometheus-grafana-installation.rst
 
-For my case, I use kubeadm to build my own Kubernetes Cluster (1 Master and 2 nodes). I encountered some issue with above steps.
-Instead, I leveraged kube-prometheus to use a single command for installation.
+## Minikbube Environment 
+If you are using minikube, please follow the following document:
+[Prometheus installation](./docs/prometheus/prometheus-grafana-installation.rst)
+
+## Cluster Environment 
+If you use kubeadm to build your own Kubernetes Cluster (1 Master and 2 nodes), you may kube-prometheus to use a single command for installation.
 
 ```
     git clone https://github.com/coreos/prometheus-operator.git
