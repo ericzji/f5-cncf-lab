@@ -28,8 +28,14 @@ When the deployment is complete and the Prometheus pod is running we can visit t
 ::
     kubectl port-forward prometheus_pod_name 9090:9090
 
-we can visit http://127.0.0.1:9090 and we should see the Prometheus user interface. This should look like this
+we can visit http://127.0.0.1:9090 and we should see the Prometheus user interface. 
 
+Now if you go to status –> Targets, you will see all the Kubernetes endpoints connected to Prometheus automatically using service discovery as shown below. So you will get all kubernetes container and node metrics in Prometheus.
+
+You can head over the homepage and select the metrics you need from the drop-down and get the graph for the time range you mention. An example graph for container memory utilization is shown below.
+
+.. image:: ../images/container_memory_rss.png
+    :align: center
 
 Installing Grafana
 -------------
