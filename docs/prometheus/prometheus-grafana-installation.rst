@@ -72,6 +72,7 @@ scs@k8s-master:~/prometheus$ helm install --name my-grafana --set rbac.create=tr
 Error: release my-grafana failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "default"
 
 The way to fix it:
+
 1. eset the tiller
 ::
     helm reset --force
@@ -109,5 +110,16 @@ The last part is to setup Grafana. The default install we used for installing Gr
 By visiting http://127.0.0.1:3000 we can now configure Grafana. Log in to Grafana using admin and the password we retrieved earlier. Inside Grafana add a datasource using the Prometheus service URL.
 
 After the datasource has been added it is finally time to add a dashboard. Goto import dashboards inside and import a dashboard using ID 1621. Grafana dashboards can be shared on Grafana dashboards. Using this dashboard ID in the import and choosing our Prometheus datasource we created earlier we should now see our first Grafana dashboard.
+
+By visiting http://127.0.0.1:3000 we can now configure Grafana. Log in to Grafana using admin and the password we retrieved earlier. Inside Grafana add a datasource using the Prometheus service URL.
+
+.. image:: ../images/grafana_datasource.png
+    :align: center
+
+After the datasource has been added it is finally time to add a dashboard. Goto import dashboards inside and import a dashboard using ID 1621. Grafana dashboards can be shared on Grafana dashboards. Using this dashboard ID in the import and choosing our Prometheus datasource we created earlier we should now see our first Grafana dashboard.
+
+
+.. image:: ../images/grafana_dashboard.png
+    :align: center
 
 Happy dashboarding!
