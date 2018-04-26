@@ -52,10 +52,10 @@ of the Helm client and [install it locally](https://raw.githubusercontent.com/ku
 You can fetch that script, and then execute it locally. It's well documented so
 that you can read through it and understand what it is doing before you run it.
 
-::
 $ curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
 $ chmod 700 get_helm.sh
 $ ./get_helm.sh
+
 
 Initialize helm using 
 ::
