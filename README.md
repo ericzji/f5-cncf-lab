@@ -65,7 +65,7 @@ deployment "helloworld-deployment” created
 Lab 3: Kubernetes cluster monitoring with Prometheus and Grafana
 ====================================================
 
-## Minikbube Environment 
+## Minikube Environment 
 If you are using minikube, please follow the following document:
 [Prometheus installation](./docs/prometheus/prometheus-grafana-installation.rst)
 
